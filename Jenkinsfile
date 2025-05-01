@@ -5,7 +5,7 @@ pipeline {
         EC2_USER = "ubuntu"  // Or ubuntu, depending on your AMI
         EC2_HOST = "3.135.193.246" //(MODIFY)
         EC2_KEY = credentials('ec2-ssh-private-key')  // Jenkins credential with SSH private key (MODIFY)
-        PROJECT_DIR = "/home/ubuntu/myproject"  // Path to your Django app (MODIFY)
+        PROJECT_DIR = "/home/ubuntu/DjangoAssignment"  // Path to your Django app (MODIFY)
         
     }
 
