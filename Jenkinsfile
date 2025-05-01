@@ -17,30 +17,49 @@ pipeline {
                         ssh -o StrictHostKeyChecking=no ${EC2_USER}@${EC2_HOST} '
                             # Fail immediately if any command fails
                             set -e
+                            echo "Starting deployment..."
 
-                            # Navigate to project directory (exit if missing)
-                            cd ${PROJECT_DIR} || { echo "Error: ${PROJECT_DIR} not found"; exit 1; }
+                            # Navigate to project directory
+                            echo "Changing to project directory..."
+                            cd ${PROJECT_DIR} || { 
+                                echo "FATAL: Directory ${PROJECT_DIR} not found on EC2";
+                                exit 1;
+                            }
 
-                            # Update code from Git
-                            git pull origin main
+                            # Force sync with GitHub
+                            echo "Syncing with GitHub repository..."
+                            git fetch origin
+                            git reset --hard origin/main
 
-                            # Create/update virtual environment
+                            # Clean Python cache
+                            echo "Cleaning Python cache..."
+                            find . -type d -name "__pycache__" -exec rm -r {} + || true
+
+                            # Virtual environment setup
+                            echo "Setting up virtual environment..."
                             if [ ! -d "comp314" ]; then
                                 python3 -m venv comp314
                             fi
 
-                            # Activate venv and install dependencies
+                            # Install dependencies
+                            echo "Installing Python dependencies..."
                             source comp314/bin/activate
                             pip install --upgrade pip
                             pip install -r requirements.txt
 
                             # Django commands
+                            echo "Running Django migrations..."
                             python manage.py migrate
+                            echo "Collecting static files..."
                             python manage.py collectstatic --noinput
                             deactivate
 
-                            # Restart Gunicorn (ensure passwordless sudo is set up)
+                            # Restart Gunicorn
+                            echo "Restarting Gunicorn..."
                             sudo systemctl restart gunicorn
+                            echo "Verifying Gunicorn status..."
+                            sudo systemctl status gunicorn --no-pager
+                            echo "Deployment completed successfully!"
                         '
                         """
                     }
@@ -51,10 +70,11 @@ pipeline {
 
     post {
         success {
-            echo "Code updated and app restarted successfully on EC2!"
+            echo "✅ Code updated and app restarted successfully on EC2!"
         }
         failure {
-            echo "Deployment failed. Check Jenkins logs for errors."
+            echo "❌ Deployment failed. Check Jenkins logs for errors."
+            slackSend color: 'danger', message: "Deployment failed: ${env.JOB_NAME} #${env.BUILD_NUMBER}"
         }
     }
 }
