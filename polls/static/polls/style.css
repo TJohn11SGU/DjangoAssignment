@@ -1,0 +1,26 @@
+/* General styles */
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background-image: url("images/background.jpg");
+    background-color: white;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+/* Style for question links */
+li a {
+    color: #000000 !important;  /* Override any other color */
+    font-size: 20px !important;  /* Override any font size */
+    text-decoration: none !important;  /* Remove underline */
+}
+
+/* Style for <h1> - just in case you want the title to be different */
+h1 {
+    color: #000000;  /* You can change this if you want to modify the title color */
+}
