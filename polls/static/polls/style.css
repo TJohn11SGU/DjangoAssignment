@@ -1,4 +1,9 @@
+<<<<<<< HEAD
 /* General styles */
+=======
+
+
+>>>>>>> 6ac4eb728afa9360926482bf1c113bca1c03f5a6
 html, body {
     height: 100%;
     margin: 0;
@@ -13,6 +18,7 @@ body {
     background-position: center;
 }
 
+<<<<<<< HEAD
 /* Style for question links */
 li a {
     color: #000000 !important;  /* Override any other color */
@@ -24,3 +30,9 @@ li a {
 h1 {
     color: #000000;  /* You can change this if you want to modify the title color */
 }
+=======
+li a {
+    color: green;
+}
+
+>>>>>>> 6ac4eb728afa9360926482bf1c113bca1c03f5a6
