@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 """
 URL configuration for hello_world project.
 
@@ -25,18 +24,3 @@ urlpatterns = [
     path('polls/', include('polls.urls')),
     path('admin/', admin.site.urls),
 ]
-=======
-from django.contrib import admin
-from django.urls import path, include
-from django.shortcuts import redirect  # Add this import for redirection
-
-# Define a simple home view that redirects to /polls/
-def home(request):
-    return redirect('/polls/')  # Redirect to /polls/
-
-urlpatterns = [
-    path('', home),  # Redirect root URL (/) to /polls/
-    path("polls/", include("polls.urls")),  # Polls app at /polls/
-    path('admin/', admin.site.urls),
-]
->>>>>>> 6ac4eb728afa9360926482bf1c113bca1c03f5a6
