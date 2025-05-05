@@ -3,7 +3,7 @@ pipeline {
 
     environment {
         EC2_USER = "ubuntu"                     // SSH user for EC2
-        EC2_HOST = "3.135.193.246"              // EC2 public IP
+        EC2_HOST = "18.117.137.58"              // EC2 public IP
         EC2_KEY = credentials('ec2-ssh-private-key')  // Jenkins SSH key credential
         PROJECT_DIR = "/home/ubuntu/DjangoAssignment" // Django project path
     }
